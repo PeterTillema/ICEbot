@@ -13,6 +13,19 @@
 #  - run it:              "./icebot.py"
 # Usage: Use "~ice det(X) or ~ice sum(X) or ~ice <function> to search for a function
 # If the match is close enough, it will use that function, i.e. "begi" would be "Begin"
+# 
+# Formatting:
+#  >b : bold text
+#  >i : italic text
+#  <b : stop bold text
+#  <i : stop italic text
+# Colors:
+#  >n : dark blue text
+#  >r : red text
+#  >o : orange text
+#  >l : light green text
+#  >g : light grey text
+#  <s : stop colored text
 
 import re
 import irc.bot
@@ -94,7 +107,7 @@ class IceBot(irc.bot.SingleServerIRCBot):
         except KeyError:
             output += ">rUnknown function<s"
         except ValueError:
-            output += ">rInvalid syntax<s: use \"~ice det(XX)\" or \"~ice sum(XX)\" or \"~ice <function>\" to search for a function"
+            output += ">rInvalid syntax<s: use \"~ice det(XX)\" or \"~ice sum(XX)\" or \"~ice function\" to search for a function"
 
         if e.target != "#cemetech":
             for tag, irc in (">b", "\x02"), (">i", "\x1D"), (">n", "\x0302"), (">r", "\x0304"), (">o", "\x0307"), (">l", "\x0309"), (">g", "\x0315"), ("<b", "\x02"), ("<i", "\x1D"), ("<s", "\x03"):
