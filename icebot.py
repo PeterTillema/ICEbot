@@ -43,9 +43,6 @@ class IceBot(irc.bot.SingleServerIRCBot):
             functions.setdefault(kind, {})[int(index)] = (
                 name.casefold(), ">b%s<b | >b>n%s(<s<b%s%s>b>n)<s<b | %s" %
                 (name, kind, index, '>b>n,<s<b'.join(arguments), description))
-    
-    with open("password") as passwordFile:
-        irc.bot.SingleServerIRCBot.__init__(..., username="peter/EFnet", password=passwordFile.read())
 
     @staticmethod
     def __distance(a, b):
@@ -59,11 +56,11 @@ class IceBot(irc.bot.SingleServerIRCBot):
                                                       and a[i] == b[j-1] else 4))
             bests = bests[1:] + bests[:1]
         return bests[-1][-1]
-
+    
     def __init__(self, channel, nickname, server, port=6667):
-        irc.bot.SingleServerIRCBot.__init__(
-            self, [(server, port)], nickname, nickname)
-        self.channel = channel
+        with open("password") as passwordFile:
+            irc.bot.SingleServerIRCBot.__init__(self, [(server, port, passwordFile.read())], nickname, nickname, username="ICEbot/EFnet")
+            self.channel = channel
 
     def on_nicknameinuse(self, c, e):
         c.nick(c.get_nickname() + "_")
@@ -124,7 +121,7 @@ def main():
     server = "jacobly.com"
     port = 10000
     channels = "#icedev"
-    nickname = "peter/EFnet"
+    nickname = "ICEbot/EFnet"
 
     bot = IceBot(channels, nickname, server, port)
     bot.start()
